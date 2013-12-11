@@ -2,28 +2,54 @@
 . lib.sh
 
 function generator(){
-  . ./settings.sh  "$1" "$2" "$3"
+export ROOT="/etc/ssl/$1"
+export CERTS_DIR="$ROOT/certs"
+export PRIVATE_DIR="$ROOT/private"
+export NEWCERTS_DIR="$ROOT/newcerts"
+export CRL_DIR="$ROOT/crl"
+export REQUESTS_DIR="$ROOT/requests"
+export DB_DIR="$ROOT/db"
+export INDEX_FILE="$DB_DIR/index.txt"
+export SERIAL_FILE="$DB_DIR/serial"
+export CRLNUM_FILE="$CRL_DIR/crlnumber"
+CONFIG="-config `pwd`/openssl.cnf"
+BATCH='-batch'
+export KEY_C="RU"
+export KEY_P="Komi Republic"
+export KEY_L="Syktyvkar"
+export KEY_O="$3"
+export KEY_OU=""
+export KEY_CN="$2"
+export KEY_E="diffiehellman@mail.ru"
+KEY_FILE="$PRIVATE_DIR/$KEY_CN.key"
+REQ_FILE="$REQUESTS_DIR/$KEY_CN.req"
+CRT_FILE="$CERTS_DIR/$KEY_CN.crt"
+EVENT_FILE="/var/log/gs/gs.log"
+export BITS="4096"
+export DAYS="3650"
+export ENC_KEY="no"
+
   [ $CA ] && createCaFs "/etc/ssl/$1" && \
-             openssl req "$BATCH" -config "$CONFIG" -new -x509 -extensions $EXT -keyout "$PRIVATE_DIR/ca.key" -out "$CERTS_DIR/ca.crt" && \
+             openssl req "$BATCH" "$CONFIG" -new -x509 -extensions $EXT -keyout "$PRIVATE_DIR/ca.key" -out "$CERTS_DIR/ca.crt" && \
              chmod 400 "$PRIVATE_DIR/ca.key" && \
              chmod 444 "$CERTS_DIR/ca.crt" && \
              addLog "created new CA [$1]"
   [ $KEY_REQ ] && checkCaFile "$1" "$2" && \
-                  openssl req "$BATCH" -config "$CONFIG" -new -keyout "$KEY_FILE" -out "$REQ_FILE" -reqexts "$REQ_EXT" && \
+                  openssl req "$BATCH" "$CONFIG" -new -keyout "$KEY_FILE" -out "$REQ_FILE" -reqexts "$REQ_EXT" && \
                   chmod 400 "$KEY_FILE" && \
                   chmod 444 "$REQ_FILE" && \
                   addLog "created key [$KEY_FILE] and request [$REQ_FILE]"
-  [ $CRT ] && openssl ca  "$BATCH" -config "$CONFIG" -out "$CRT_FILE" -in "$REQ_FILE" -extensions "$EXT" && \
+  [ $CRT ] && openssl ca  "$BATCH" "$CONFIG" -out "$CRT_FILE" -in "$REQ_FILE" -extensions "$EXT" && \
               chmod 444 "$CRT_FILE" && \
               addLog "signed request [$REQ_FILE] into certificate [$CRT_FILE]"
   [ $INT_CA ] && createCaFs "/etc/ssl/$newCaName" && \
                  cp "$KEY_FILE" "/etc/ssl/$newCaName/private/ca.key" && \
                  cp "$CRT_FILE" "/etc/ssl/$newCaName/certs/ca.crt" && \
                  addLog "created intermediate CA [$newCaName] on the certificate [$CRT_FILE]"
-  [ $REV ] && openssl ca -revoke "$CRT_FILE" -config "$CONFIG" && \
+  [ $REV ] && openssl ca -revoke "$CRT_FILE" "$CONFIG" && \
               addLog "revoked certificate [$CRT_FILE]"
   [ $CRL ] && CRL_FILE="$CRL_DIR/`date +'%y%m%d-%H%M'`.crl" && \
-              openssl ca -gencrl -out "$CRL_FILE" -config "$CONFIG" && \
+              openssl ca -gencrl -out "$CRL_FILE" "$CONFIG" && \
               chmod 444 "$CRL_FILE" && \
               addLog "created revoked certificates list [$CRL_FILE]"
   return 0
@@ -56,6 +82,3 @@ function mainMenu(){
   [ $GEN ] && generator "$caName" "$commonName" "$orgName"
 }
 mainMenu
-#if [ $? == 0 ]; then
-#  mainMenu
-#fi
