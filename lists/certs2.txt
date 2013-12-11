@@ -1,0 +1,5 @@
+ca-test02  admin10 cbi
+ca-test02  admin11 cbi
+ca-test02  admin12 cbi
+ca-test02  admin13 cbi
+ca-test02  admin14 cbi

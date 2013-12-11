@@ -1,0 +1,2 @@
+ca-test02 minfin-sn01 minfin
+ca-test02 minzdrav-sn01 minzdarv
