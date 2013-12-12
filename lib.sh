@@ -166,7 +166,7 @@ function createKeyCrt {
   return 0
 }
 
-function createServerCrt {
+function createVpnServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
   orgName=$(getString 'Input Organization Name')
@@ -180,6 +180,33 @@ function createServerCrt {
   return 0
 }
 
+function createHttpsServerCrt {
+  caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
+  commonName=$(getNewFileName "$caName" 'Common Name')
+  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+    GEN=1
+  fi
+  KEY_REQ=1
+  CRT=1
+  EXT="https_srv"
+  REQ_EXT="v3_req"
+  return 0
+}
+
+function createRdpServerCrt {
+  caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
+  commonName=$(getNewFileName "$caName" 'Common Name')
+  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+    GEN=1
+  fi
+  KEY_REQ=1
+  CRT=1
+  EXT="ssl_rdp"
+  REQ_EXT="v3_req"
+  return 0
+}
 
 ## This function I used from generation certificates for my sensors (computers) of IDS snort. 
 ## If you want you may edit this function for your needs

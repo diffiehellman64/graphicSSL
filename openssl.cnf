@@ -206,9 +206,28 @@ authorityKeyIdentifier=keyid,issuer
 
 # This is required for TSA certificates.
 # extendedKeyUsage = critical,timeStamping
+# serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, msCodeInd, msCodeCom, msCTLSign, msSGC, msEFS, nsSGC
+
+[ v3_ca ]
+# Самоподписанный сертификат
+subjectKeyIdentifier		= hash
+authorityKeyIdentifier		= keyid:always,issuer
+basicConstraints 		= CA:true
+nsCertType 			= sslCA
+nsComment                      	= "CA Certificate"
+extendedKeyUsage                = serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, msCTLSign, msEFS
+keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign, cRLSign
+
+[ https_srv ]
+basicConstraints=CA:FALSE
+nsCertType                      = server
+nsComment                       = "HTTPS Server Certificate"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+extendedKeyUsage                = serverAuth
+keyUsage                        = digitalSignature, keyEncipherment
 
 [ ssl_srv ]
-# JY ADDED -- Make a cert with nsCertType set to "server"
 basicConstraints=CA:FALSE
 nsCertType                     	= server
 nsComment                      	= "SSL Server Certificate"
@@ -216,6 +235,16 @@ subjectKeyIdentifier		= hash
 authorityKeyIdentifier		= keyid,issuer:always
 extendedKeyUsage		= serverAuth
 keyUsage 			= digitalSignature, keyEncipherment
+
+[ ssl_rdp ]
+basicConstraints=CA:FALSE
+nsCertType                      = server
+nsComment                       = "RDP client Certificate"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+extendedKeyUsage                = serverAuth, codeSigning, 1.3.6.1.4.1.311.54.1.2
+keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment
+subjectAltName			= DNS:secretnet6-ss01.rk.local, DNS:secretnet.rk.local, IP:10.33.64.107
 
 [ v3_req ]
 # Extensions to add to a certificate request
@@ -230,35 +259,6 @@ keyUsage 			= nonRepudiation, digitalSignature, keyEncipherment
 nsCertType                	= sslCA
 nsComment                      	= "Intermediate CA Certificate"
 
-
-[ v3_ca ]
-# Extensions for a typical CA
-# PKIX recommendation.
-subjectKeyIdentifier		= hash
-authorityKeyIdentifier		= keyid:always,issuer
-# This is what PKIX recommends but some broken software chokes on critical
-# extensions.
-#basicConstraints = critical,CA:true
-# So we do this instead.
-basicConstraints 		= CA:true
-# Key usage: this is typical for a CA certificate. However since it will
-# prevent it being used as an test self-signed certificate it is best
-# left out by default.
-# keyUsage = cRLSign, keyCertSign
-
-# Some might want this also
-nsCertType 			= sslCA
-nsComment                      	= "CA Certificate"
-# Include email address in subject alt name: another PKIX recommendation
-# subjectAltName=email:copy
-# Copy issuer details
-# issuerAltName=issuer:copy
-
-# DER hex encoding of an extension: beware experts only!
-# obj=DER:02:03
-# Where 'obj' is a standard or added object
-# You can even override a supported extension:
-# basicConstraints= critical, DER:30:03:01:01:FF
 
 [ crl_ext ]
 
