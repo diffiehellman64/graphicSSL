@@ -15,14 +15,7 @@ oid_section		= new_oids
 # X.509v3 extensions in its main [= default] section.)
 
 [ new_oids ]
-
-# We can add new OIDs in here for use by 'ca', 'req' and 'ts'.
-# Add a simple OID like this:
-# testoid1=1.2.3.4
-# Or use config file substitution like this:
-# testoid2=${testoid1}.5.6
-
-# Policies used by the TSA examples.
+rdpSrv		= 1.3.6.1.4.1.311.54.1.2
 tsa_policy1 = 1.2.3.4.1
 tsa_policy2 = 1.2.3.4.5.6
 tsa_policy3 = 1.2.3.4.5.7
@@ -217,9 +210,10 @@ nsCertType 			= sslCA
 nsComment                      	= "CA Certificate"
 extendedKeyUsage                = serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, msCTLSign, msEFS
 keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign, cRLSign
+crlDistributionPoints		= URI:http://cbikomi.ru/certsrv/test.crl
 
 [ https_srv ]
-basicConstraints=CA:FALSE
+basicConstraints 		= CA:true
 nsCertType                      = server
 nsComment                       = "HTTPS Server Certificate"
 subjectKeyIdentifier            = hash
@@ -239,12 +233,13 @@ keyUsage 			= digitalSignature, keyEncipherment
 [ ssl_rdp ]
 basicConstraints=CA:FALSE
 nsCertType                      = server
-nsComment                       = "RDP client Certificate"
+nsComment                       = "RDP server Certificate"
 subjectKeyIdentifier            = hash
 authorityKeyIdentifier          = keyid,issuer:always
 extendedKeyUsage                = serverAuth, codeSigning, 1.3.6.1.4.1.311.54.1.2
 keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment
 subjectAltName			= DNS:secretnet6-ss01.rk.local, DNS:secretnet.rk.local, IP:10.33.64.107
+#crlDistributionPoints		= URI:http://cbikomi.ru/certsrv/test.crl
 
 [ v3_req ]
 # Extensions to add to a certificate request

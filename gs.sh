@@ -1,5 +1,6 @@
 #!/bin/bash
 . lib.sh
+#openssl pkcs12 -export -in rdp-srv.crt -inkey ../private/rdp-srv.key -certfile ca.crt -name "Cert for Ivan" -out cert.p12
 
 function generator(){
 export ROOT="/etc/ssl/$1"
@@ -25,7 +26,8 @@ KEY_FILE="$PRIVATE_DIR/$KEY_CN.key"
 REQ_FILE="$REQUESTS_DIR/$KEY_CN.req"
 CRT_FILE="$CERTS_DIR/$KEY_CN.crt"
 EVENT_FILE="/var/log/gs/gs.log"
-export BITS="4096"
+#export BITS="4096"
+export BITS="2048"
 export DAYS="3650"
 export ENC_KEY="no"
 
@@ -48,7 +50,7 @@ export ENC_KEY="no"
                  addLog "created intermediate CA [$newCaName] on the certificate [$CRT_FILE]"
   [ $REV ] && openssl ca -revoke "$CRT_FILE" -config "$CONFIG" && \
               addLog "revoked certificate [$CRT_FILE]"
-  [ $CRL ] && CRL_FILE="$CRL_DIR/`date +'%y%m%d-%H%M'`.crl" && \
+  [ $CRL ] && CRL_FILE="$CRL_DIR/$1.crl" && \
               openssl ca -gencrl -out "$CRL_FILE" -config "$CONFIG" && \
               chmod 444 "$CRL_FILE" && \
               addLog "created revoked certificates list [$CRL_FILE]"
