@@ -70,7 +70,7 @@ function mainMenu(){
     9 'View CA' \
     10 'Revoke certificate' \
     11 'Create a list of revoked certificates' \
-    12 'Delete CA' )
+    12 'Delete CA')
   case $action in
     1) createCa ;;
     2) createInterCa ;;

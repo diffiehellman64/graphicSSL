@@ -1,4 +1,5 @@
 EVENT_FILE="/var/log/gs/gs.log"
+
 function createDir {
   mkdir $1
 #  echo "создал директорию: $1"
@@ -207,9 +208,6 @@ function createRdpServerCrt {
   REQ_EXT="v3_req"
   return 0
 }
-
-## This function I used from generation certificates for my sensors (computers) of IDS snort. 
-## If you want you may edit this function for your needs
 
 function createSensorCrt {
 #  caName='ca-cmvpn'
