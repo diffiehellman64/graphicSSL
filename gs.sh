@@ -64,26 +64,28 @@ function mainMenu(){
     3 'Create certificate' \
     4 'Create a certificate for VPN server' \
     5 'Create a certificate for HTTPS server' \
-    6 'Create a certificate for RDP server' \
-    7 'Create certificates for sensor' \
-    8 'Create certificates from list' \
-    9 'View CA' \
-    10 'Revoke certificate' \
-    11 'Create a list of revoked certificates' \
-    12 'Delete CA')
+    6 'Create a certificate for Sqiid HTTPS server' \
+    7 'Create a certificate for RDP server' \
+    8 'Create certificates for sensor' \
+    9 'Create certificates from list' \
+   10 'View CA' \
+   11 'Revoke certificate' \
+   12 'Create a list of revoked certificates' \
+   13 'Delete CA')
   case $action in
     1) createCa ;;
     2) createInterCa ;;
     3) createKeyCrt ;;
     4) createVpnServerCrt ;;
     5) createHttpsServerCrt ;;
-    6) createRdpServerCrt ;;
-    7) createSensorCrt ;;
-    8) createCrtFromList ;;
-    9) viewCa ;;
-   10) revokeCrt ;;
-   11) createCrlList ;;
-   12) deleteCa ;;
+    6) createSquidHttpsCrt ;;
+    7) createRdpServerCrt ;;
+    8) createSensorCrt ;;
+    9) createCrtFromList ;;
+   10) viewCa ;;
+   11) revokeCrt ;;
+   12) createCrlList ;;
+   13) deleteCa ;;
   esac
   [ $GEN ] && generator "$caName" "$commonName" "$orgName"
 }

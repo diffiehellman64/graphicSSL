@@ -195,6 +195,20 @@ function createHttpsServerCrt {
   return 0
 }
 
+function createSquidHttpsCrt {
+  caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
+  commonName=$(getNewFileName "$caName" 'Common Name')
+  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+    GEN=1
+  fi
+  KEY_REQ=1
+  CRT=1
+  EXT="https_squid"
+  REQ_EXT="v3_req"
+  return 0
+}
+
 function createRdpServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')

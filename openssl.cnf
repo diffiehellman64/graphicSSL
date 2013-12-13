@@ -156,8 +156,8 @@ nsCertType                      = sslCA
 nsComment                       = "Squid Server Certificate"
 subjectKeyIdentifier            = hash
 authorityKeyIdentifier          = keyid,issuer:always
-extendedKeyUsage                = serverAuth
-keyUsage                        = digitalSignature, keyEncipherment
+extendedKeyUsage                = serverAuth, clientAuth
+keyUsage                        = keyCertSign, cRLSign
 
 [ ssl_srv ]
 basicConstraints=CA:FALSE
