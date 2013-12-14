@@ -16,12 +16,19 @@ export CRLNUM_FILE="$CRL_DIR/crlnumber"
 CONFIG="`pwd`/openssl.cnf"
 BATCH='-batch'
 export KEY_C="RU"
+#export KEY_P="Республика Коми"
 export KEY_P="Komi Republic"
 export KEY_L="Syktyvkar"
-export KEY_O="$3"
-export KEY_OU=""
+#export KEY_O="ГБУ Республики Коми ЦБИ"
+export KEY_O="State Agency Republic of Komi 'Center of Information Security'"
+#export KEY_OU="Сектор обнаружения вторжений"
+export KEY_OU="Sector of intrusion detection"
+if [ $3 ]; then
+  export KEY_O="$3"
+  export KEY_OU=""
+fi
 export KEY_CN="$2"
-export KEY_E="diffiehellman@mail.ru"
+export KEY_E="sov@cbi.rkomi.ru"
 KEY_FILE="$PRIVATE_DIR/$KEY_CN.key"
 REQ_FILE="$REQUESTS_DIR/$KEY_CN.req"
 CRT_FILE="$CERTS_DIR/$KEY_CN.crt"
@@ -58,7 +65,7 @@ export ENC_KEY="no"
 }
 
 function mainMenu(){
-  action=$(dialog --stdout --backtitle "Graphic openSSL framework" --menu "Choise action" 0 0 0  \
+    action=$(dialog --stdout --backtitle "Graphic openSSL framework" --menu "Choise action" 0 0 0  \
     1 'Create a root CA' \
     2 'Create intermediate CA' \
     3 'Create certificate' \

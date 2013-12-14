@@ -128,8 +128,9 @@ function show {
 function createCa {
   caName=$(getNewCaName)
   commonName=$(getString 'Input Commom Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+#  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   CA=1  
@@ -141,8 +142,8 @@ function createInterCa {
   caName=$(getFileName "/etc/ssl" "ca" "Choise root CA")
   newCaName=$(getNewCaName)
   commonName=$(getNewFileName "$caName" 'Commom Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $newCaName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $newCaName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
@@ -156,8 +157,8 @@ function createInterCa {
 function createKeyCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
@@ -170,8 +171,8 @@ function createKeyCrt {
 function createVpnServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
@@ -184,8 +185,8 @@ function createVpnServerCrt {
 function createHttpsServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
@@ -198,8 +199,8 @@ function createHttpsServerCrt {
 function createSquidHttpsCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
@@ -212,8 +213,8 @@ function createSquidHttpsCrt {
 function createRdpServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
-  orgName=$(getString 'Input Organization Name')
-  if [ $caName ] && [ $commonName ] && [ $orgName ]; then
+#  orgName=$(getString 'Input Organization Name')
+  if [ $caName ] && [ $commonName ]; then
     GEN=1
   fi
   KEY_REQ=1
