@@ -1,8 +1,10 @@
 #!/bin/bash
 . lib.sh
-#openssl pkcs12 -export -in rdp-srv.crt -inkey ../private/rdp-srv.key -certfile ca.crt -name "Cert for Ivan" -out cert.p12
 
 function generator(){
+export BITS="2048"
+export DAYS="3650"
+export ENC_KEY="no"
 export ROOT="/etc/ssl/$1"
 export CERTS_DIR="$ROOT/certs"
 export PRIVATE_DIR="$ROOT/private"
@@ -16,12 +18,9 @@ export CRLNUM_FILE="$CRL_DIR/crlnumber"
 CONFIG="`pwd`/openssl.cnf"
 BATCH='-batch'
 export KEY_C="RU"
-#export KEY_P="Республика Коми"
 export KEY_P="Komi Republic"
 export KEY_L="Syktyvkar"
-#export KEY_O="ГБУ Республики Коми ЦБИ"
-export KEY_O="State Agency Republic of Komi 'Center of Information Security'"
-#export KEY_OU="Сектор обнаружения вторжений"
+export KEY_O="Center of Information Security"
 export KEY_OU="Sector of intrusion detection"
 if [ $3 ]; then
   export KEY_O="$3"
@@ -33,13 +32,9 @@ KEY_FILE="$PRIVATE_DIR/$KEY_CN.key"
 REQ_FILE="$REQUESTS_DIR/$KEY_CN.req"
 CRT_FILE="$CERTS_DIR/$KEY_CN.crt"
 EVENT_FILE="/var/log/gs/gs.log"
-#export BITS="4096"
-export BITS="2048"
-export DAYS="3650"
-export ENC_KEY="no"
 
   [ $CA ] && createCaFs "/etc/ssl/$1" && \
-             openssl req "$BATCH" -config "$CONFIG" -new -x509 -extensions $EXT -keyout "$PRIVATE_DIR/ca.key" -out "$CERTS_DIR/ca.crt" && \
+             openssl req "$BATCH" -config "$CONFIG" -days $DAYS -new -x509 -extensions $EXT -keyout "$PRIVATE_DIR/ca.key" -out "$CERTS_DIR/ca.crt" && \
              chmod 400 "$PRIVATE_DIR/ca.key" && \
              chmod 444 "$CERTS_DIR/ca.crt" && \
              addLog "created new CA [$1]"
