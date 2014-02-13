@@ -154,10 +154,10 @@ subjectAltName 			= @alt_names
 keyUsage                        = digitalSignature, keyEncipherment
 
 [alt_names]
+IP = 192.168.155.90
 DNS.1 = kibana.cbi
 DNS.2 = teampass.cbi
 DNS.3 = wiki.cbi
-DNS.4 = 192.168.155.90
 
 [ https_squid ]
 basicConstraints                = CA:true
