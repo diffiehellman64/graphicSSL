@@ -141,15 +141,23 @@ nsComment                      	= "CA Certificate"
 extendedKeyUsage                = serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, msCTLSign, msEFS
 keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign, cRLSign
 crlDistributionPoints		= URI:http://cbikomi.ru/certsrv/test.crl
+subjectAltName                  = @alt_names
 
 [ https_srv ]
 basicConstraints 		= CA:false
-nsCertType                      = server
-nsComment                       = "HTTPS Server Certificate"
+#nsCertType                      = server
+#nsComment                       = "HTTPS Server Certificate"
 subjectKeyIdentifier            = hash
 authorityKeyIdentifier          = keyid,issuer:always
-extendedKeyUsage                = serverAuth
+extendedKeyUsage                = serverAuth, clientAuth
+subjectAltName 			= @alt_names
 keyUsage                        = digitalSignature, keyEncipherment
+
+[alt_names]
+DNS.1 = kibana.cbi
+DNS.2 = teampass.cbi
+DNS.3 = wiki.cbi
+DNS.4 = 192.168.155.90
 
 [ https_squid ]
 basicConstraints                = CA:true
