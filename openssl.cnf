@@ -178,6 +178,16 @@ authorityKeyIdentifier		= keyid,issuer:always
 extendedKeyUsage		= serverAuth
 keyUsage 			= digitalSignature, keyEncipherment
 
+[ ssl_client ]
+basicConstraints=CA:FALSE
+nsCertType                      = client
+nsComment                       = "SSL Client Certificate"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+extendedKeyUsage                = clientAuth
+keyUsage                        = digitalSignature, keyEncipherment
+
+
 [ ssl_rdp ]
 basicConstraints=CA:FALSE
 nsCertType                      = server

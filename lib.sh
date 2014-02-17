@@ -182,6 +182,20 @@ function createVpnServerCrt {
   return 0
 }
 
+function createVpnClientCrt {
+  caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
+  commonName=$(getNewFileName "$caName" 'Common Name')
+  if [ $caName ] && [ $commonName ]; then
+    GEN=1
+  fi
+  KEY_REQ=1
+  CRT=1
+  EXT="ssl_client"
+  REQ_EXT="v3_req"
+  return 0
+}
+
+
 function createHttpsServerCrt {
   caName=$(getFileName "/etc/ssl" "ca" "Choise CA")
   commonName=$(getNewFileName "$caName" 'Common Name')
